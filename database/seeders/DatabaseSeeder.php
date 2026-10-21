@@ -14,7 +14,14 @@ class DatabaseSeeder extends Seeder
         $this->call([
             RolSeeder::class,
             EstadoSolicitudSeeder::class,
+            EspecieSeeder::class,
+            EstadoMascotaSeeder::class,
+
             UsuarioSeeder::class,
+            RazaSeeder::class,          
+            AdoptanteSeeder::class,
+
+            MascotaSeeder::class,
         ]);
     }
 }
