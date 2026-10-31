@@ -2,12 +2,18 @@
 
 namespace App\Models;
 
-use Illuminate\Database\Eloquent\Model;
+use Filament\Models\Contracts\FilamentUser;
+use Filament\Models\Contracts\HasName;
+use Filament\Panel;
+use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\HasMany;
+use Illuminate\Notifications\Notifiable;
 
-class Usuario extends Model
+class Usuario extends Authenticatable implements FilamentUser, HasName
 {
+    use Notifiable;
+
     protected $table = 'USUARIO';
     protected $primaryKey = 'idUsuario';
 
@@ -24,7 +30,32 @@ class Usuario extends Model
 
     protected $hidden = [
         'contraseña',
+        'remember_token',
     ];
+
+    /**
+     * Mapea la contraseña hacia la columna 'contraseña'
+     */
+    public function getAuthPassword()
+    {
+        return $this->contraseña;
+    }
+
+    /**
+     * Nombre que muestra Filament en la esquina superior derecha
+     */
+    public function getFilamentName(): string
+    {
+        return "{$this->nombre} {$this->apellidoPaterno}";
+    }
+
+    /**
+     * Control de acceso al panel de Filament
+     */
+    public function canAccessPanel(Panel $panel): bool
+    {
+        return (bool) $this->activo;
+    }
 
     public function rol(): BelongsTo
     {
