@@ -28,4 +28,8 @@ class Mascota extends Model
     {
         return $this->belongsTo(Usuario::class, 'idUsuario', 'idUsuario');
     }
+    public function especie()
+{
+    return $this->belongsTo(\App\Models\Especie::class, 'especie_id', 'idEspecie');
+}
 }
