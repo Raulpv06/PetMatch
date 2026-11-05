@@ -11,6 +11,8 @@ class Especie extends Model
     protected $primaryKey = 'idEspecie';
     public $timestamps = false;
 
+    protected $fillable = ['nombreEspecie'];
+
     public function razas() {
         return $this->hasMany(Raza::class, 'idEspecie', 'idEspecie');
     }
