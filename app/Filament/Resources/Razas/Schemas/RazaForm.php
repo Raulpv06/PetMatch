@@ -2,6 +2,7 @@
 
 namespace App\Filament\Resources\Razas\Schemas;
 
+use Filament\Forms\Components\Select;
 use Filament\Forms\Components\TextInput;
 use Filament\Schemas\Schema;
 
@@ -11,13 +12,18 @@ class RazaForm
     {
         return $schema
             ->components([
-                Select::make('especie_id')
-                    ->relationship('especie', 'nombre')
+                // Importa Select y vincula con la clave foránea e identificador de ESPECIE
+                Select::make('idEspecie')
+                    ->label('Especie')
+                    ->relationship('especie', 'nombreEspecie')
+                    ->searchable()
+                    ->preload()
                     ->required(),
+
                 TextInput::make('nombreRaza')
-                    ->required(),
-                
+                    ->label('Nombre de la Raza')
+                    ->required()
+                    ->maxLength(80),
             ]);
     }
 }
-
